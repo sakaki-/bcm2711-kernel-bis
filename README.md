@@ -1,6 +1,8 @@
 # bcm2711-kernel-bis-bis
 Automated build of a tweaked version of the latest 64-bit `bcm2711_defconfig` Linux kernel for the RPi4, updated weekly.
 
+**Caution - this repo is work in progress, and not yet ready for production use!**
+
 ## Description
 
 <img src="https://raw.githubusercontent.com/sakaki-/resources/master/raspberrypi/pi4/Raspberry_Pi_4_B.jpg" alt="Raspberry Pi 4 B" width="250px" align="right"/>
@@ -15,7 +17,7 @@ A new build tarball is automatically created and uploaded as a release asset eac
 
 > The default branch is used, as that is generally given most attention by RPF upstream.
 
-As an (historical) example, on xx July 2017, the default branch was `rpi-4.19.y` and the latest commit was `xxxxxx` (the short form of which is `xxxx`). The created release was [4.19.xx.201707xx](https://github.com/sakaki-/bcm2711-kernel-bis/releases/4.19.xx.201707xx), within which the kernel tarball was `bcm2711-kernel-bis-4.19.xx.201707xx.tar.xz`, and the corresponding kernel release name was `4.19.xx-v8-xxxx+`.
+As an (historical) example, on 23 July 2019, the default branch was `rpi-4.19.y` and the latest commit was `a21b98653ecf7b2f71906228d9965d8174a1c275` (the short form of which is `a21b98653ecf`). The created release was [4.19.59.20190723](https://github.com/sakaki-/bcm2711-kernel-bis/releases/tag/4.19.59.20190723), within which the kernel tarball was `bcm2711-kernel-bis-4.19.59.20190723.tar.xz`, and the corresponding kernel release name was `4.19.59-v8-a21b98653ecf-bis+`.
 
 Each kernel release tarball currently provides the following files:
 * `/boot/kernel8p4.img` (this is the bootable 64-bit kernel);
