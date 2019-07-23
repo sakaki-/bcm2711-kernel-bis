@@ -9,7 +9,7 @@ Automated build of a tweaked version of the latest 64-bit `bcm2711_defconfig` Li
 
 This project contains a weekly autobuild of the default branch (currently, `rpi-4.19.y`) of the [official Raspberry Pi Linux source tree](https://github.com/raspberrypi/linux), for the [64-bit Raspberry Pi 4](https://www.raspberrypi.org/products/raspberry-pi-4-model-b/).
 
-As with its sister project [bcm2711-kernel](https://github.com/sakaki-/bcm2711-kernel), the baseline build configuration is the upstream `bcm2711_defconfig`, wherein the first 12 hex digits of the tip commit SHA1 hash plus `-pi4` are appended to `CONFIGLOCALVERSION` (with a separating hyphen). However, in *this* project, `-bis` is additionally appended to `CONFIGLOCALVERSION`, and (more importantly) additional tweaks are *also* applied to the kernel configuration before building, by running the [`conform_config.sh`](https://github.com/sakaki-/bcm2711-kernel-bis/blob/master/conform_config.sh) script.
+As with its sister project [bcm2711-kernel](https://github.com/sakaki-/bcm2711-kernel), the baseline build configuration is the upstream `bcm2711_defconfig`, wherein the first 12 hex digits of the tip commit SHA1 hash plus `-p4` are appended to `CONFIGLOCALVERSION` (with a separating hyphen). However, in *this* project, `-bis` is additionally appended to `CONFIGLOCALVERSION`, and (more importantly) additional tweaks are *also* applied to the kernel configuration before building, by running the [`conform_config.sh`](https://github.com/sakaki-/bcm2711-kernel-bis/blob/master/conform_config.sh) script.
 
 > If you have changes you'd like to apply to the kernel config used by this project, please submit a PR targeting the [`conform_config.sh`](https://github.com/sakaki-/bcm2711-kernel-bis/blob/master/conform_config.sh) script. Changes should target the *end* of the script. Only edits which use the bundled convenience functions `set_kernel_config` and (rarely) `unset_kernel_config` will be considered for merging. Modularization is prefered wherever possible. Please include a short comment describing the changes, ideally including a link or bug ID.
 
@@ -17,7 +17,7 @@ A new build tarball is automatically created and uploaded as a release asset eac
 
 > The default branch is used, as that is generally given most attention by RPF upstream.
 
-As an (historical) example, on 23 July 2019, the default branch was `rpi-4.19.y` and the latest commit was `a21b98653ecf7b2f71906228d9965d8174a1c275` (the short form of which is `a21b98653ecf`). The created release was [4.19.59.20190723](https://github.com/sakaki-/bcm2711-kernel-bis/releases/tag/4.19.59.20190723), within which the kernel tarball was `bcm2711-kernel-bis-4.19.59.20190723.tar.xz`, and the corresponding kernel release name was `4.19.59-v8-a21b98653ecf-pi4-bis+`.
+As an (historical) example, on 23 July 2019, the default branch was `rpi-4.19.y` and the latest commit was `a21b98653ecf7b2f71906228d9965d8174a1c275` (the short form of which is `a21b98653ecf`). The created release was [4.19.59.20190723](https://github.com/sakaki-/bcm2711-kernel-bis/releases/tag/4.19.59.20190723), within which the kernel tarball was `bcm2711-kernel-bis-4.19.59.20190723.tar.xz`, and the corresponding kernel release name was `4.19.59-v8-a21b98653ecf-p4-bis+`.
 
 Each kernel release tarball currently provides the following files:
 * `/boot/kernel8-p4.img` (this is the bootable 64-bit kernel);
