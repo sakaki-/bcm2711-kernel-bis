@@ -33,7 +33,7 @@ The current kernel tarball may be downloaded from the link below (or via `wget`,
 
 Variant | Version | Most Recent Image
 :--- | ---: | ---:
-Kernel, dtbs, modules and GIC stub | 4.19.59.20190723 | [bcm2711-kernel-bis-4.19.59.20190723.tar.xz](https://github.com/sakaki-/bcm2711-kernel-bis/releases/download/4.19.59.20190723/bcm2711-kernel-bis-4.19.59.20190723.tar.xz)
+Kernel, dtbs, modules and GIC stub | 4.19.59.20190724 | [bcm2711-kernel-bis-4.19.59.20190724.tar.xz](https://github.com/sakaki-/bcm2711-kernel-bis/releases/download/4.19.59.20190724/bcm2711-kernel-bis-4.19.59.20190724.tar.xz)
 
 The corresponding kernel configuration (derived via `make bcm2711_defconfig && conform_config.sh && make olddefconfig`) may be viewed [here](https://github.com/sakaki-/bcm2711-kernel-bis/blob/master/config). The 'baseline' `bcm2711_defconfig` may be viewed [here](https://github.com/sakaki-/bcm2711-kernel-bis/blob/master/bcm2711_config), the `conform_config.sh` script may be viewed [here](https://github.com/sakaki-/bcm2711-kernel-bis/blob/master/conform_config.sh), and a diff between the 'tweaked' and 'baseline' configurations may be viewed [here](https://github.com/sakaki-/bcm2711-kernel-bis/blob/master/vs_bcm2711_config.diff).
 
@@ -43,8 +43,8 @@ The corresponding kernel configuration (derived via `make bcm2711_defconfig && c
 
 To deploy (assuming that your RPi4's micro SD-card's first partition is mounted as `/boot`, and you are already running a 32-bit or 64-bit RPi4-capable image, simply download, untar into the root directory, and reboot:
 ```console
-pi64 ~ # wget -c https://github.com/sakaki-/bcm2711-kernel-bis/releases/download/4.19.59.20190723/bcm2711-kernel-bis-4.19.59.20190723.tar.xz
-pi64 ~ # tar -xJf bcm27111-kernel-4.19.59.20190723.tar.xz -C /
+pi64 ~ # wget -c https://github.com/sakaki-/bcm2711-kernel-bis/releases/download/4.19.59.20190724/bcm2711-kernel-bis-4.19.59.20190724.tar.xz
+pi64 ~ # tar -xJf bcm27111-kernel-4.19.59.20190724.tar.xz -C /
 pi64 ~ # sync && reboot
 ```
 
