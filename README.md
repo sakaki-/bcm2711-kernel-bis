@@ -1,4 +1,4 @@
-# bcm2711-kernel-bis-bis
+# bcm2711-kernel-bis
 Automated build of a tweaked version of the latest 64-bit `bcm2711_defconfig` Linux kernel for the RPi4, updated weekly.
 
 **Caution - this repo is work in progress, and not yet ready for production use!**
@@ -41,23 +41,42 @@ The corresponding kernel configuration (derived via `make bcm2711_defconfig && c
 
 ## <a name="installation"></a>Installation
 
-To deploy (assuming that your RPi4's micro SD-card's first partition is mounted as `/boot`, and you are already running a 32-bit or 64-bit RPi4-capable image, simply download, untar into the root directory, and reboot:
+You can simply untar a kernel release tarball from this project into an existing (32 or 64-bit) OS image to deploy it.
+
+For example, to allow the current 32-bit userland Raspbian (with desktop) image to be booted under a 64-bit kernel on a Pi4, proceed as follows.
+
+> For simplicity, I will assume you are working on a Linux PC, as root, here.
+
+Begin by downloading and writing the Raspbian Buster image onto a _unused_ microSD card, and mounting it. Assuming the card appears as `/dev/mmcblk0` on your PC, and your OS image has two partitions (bootfs on the first, rootfs on the second, as Raspbian does), issue:
+
 ```console
-pi64 ~ # wget -c https://github.com/sakaki-/bcm2711-kernel-bis/releases/download/4.19.59.20190724/bcm2711-kernel-bis-4.19.59.20190724.tar.xz
-pi64 ~ # tar -xJf bcm27111-kernel-4.19.59.20190724.tar.xz -C /
-pi64 ~ # sync && reboot
+linuxpc ~ # wget -cO- https://downloads.raspberrypi.org/raspbian_latest | bsdtar -xOf- > /dev/mmcblk0
+linuxpc ~ # sync && partprobe /dev/mmcblk0
+linuxpc ~ # mkdir -pv /mnt/piroot
+linuxpc ~ # mount -v /dev/mmcblk0p2 /mnt/piroot
+linuxpc ~ # mount -v /dev/mmcblk0p1 /mnt/piroot/boot
 ```
 
-Alternatively, if you have my [rpi3 overlay](https://github.com/sakaki-/rpi3-overlay) installed (it is pre-installed on the [gentoo-on-rpi3-64bit](https://github.com/sakaki-/gentoo-on-rpi3-64bit) image), you can simply emerge the `bcm2711-kernel-bis-bin` package (a new ebuild is automatically created to mirror each release here). For example, to install the latest available version (and start using it):
+> NB: you **must** take care to substitute the correct path for your microSD card (which may appear as something completely different from `/dev/mmcblk0`, depending on your system) in these instructions, as the contents of the target drive will be irrevocably overwritten by the above operation.
+
+Next, fetch the the current kernel tarball, and untar it into the mounted image. Issue:
+
 ```console
-pi64 ~ # emaint sync --repo rpi3
-pi64 ~ # emerge -av bcm2711-kernel-bis-bin
-pi64 ~ # reboot
+linuxpc ~ # wget -cO- https://github.com/sakaki-/bcm2711-kernel-bis/releases/download/4.19.59.20190724/bcm2711-kernel-bis-4.19.59.20190724.tar.xz | tar -xJf- -C /mnt/piroot/
 ```
 
-Edit `/boot/config.txt` and ensure you have a Pi-4 specific section at the bottom, as follows:
+Then, edit the image's `/boot/config.txt`:
+
+```console
+linuxpc ~ # nano -w /mnt/piroot/boot/config.txt
+```
+
+Modify the [pi4] section of this file (it appears near the end of the file), so it reads as follows:
 ```ini
 [pi4]
+# Enable DRM VC4 V3D driver on top of the dispmanx display stack
+dtoverlay=vc4-fkms-v3d
+max_framebuffers=2
 # memory must be clamped at 1GiB for current 64-bit Pi4 kernels
 # restriction will hopefully be removed shortly
 total_mem=1024
@@ -65,7 +84,18 @@ arm_64bit=1
 enable_gic=1
 armstub=armstub8-gic.bin
 # differentiate from Pi3 64-bit kernels
-kernel="kernel8-p4.img"
+kernel=kernel8-p4.img
 ```
+
+Leave the rest of the file as-is. Save, and exit `nano`. Then unmount the image:
+
+```console
+linuxpc ~ # sync
+linuxpc ~ # umount -v /mnt/piroot/{boot,}
+```
+
+If you now remove the microSD card, insert it into a RPi4, and power on, you should find it starts up under the 64-bit kernel! 
+
+> Users of my [rpi3 overlay](https://github.com/sakaki-/rpi3-overlay) (it is pre-installed on the [gentoo-on-rpi3-64bit](https://github.com/sakaki-/gentoo-on-rpi3-64bit) image, for example), can simply `emerge` the `bcm2711-kernel-bis-bin` package to deploy (a new ebuild is automatically created to mirror each release here).
 
 > NB: these prebuilt kernels and ebuilds are provided as a convenience only. Use at your own risk! **Given that the releases in this project are created automatically, and particularly since they include user-submitted tweaks to the 'official' `bcm2711_defconfig`, there is no guarantee that any given kernel will boot correctly.** A 64-bit kernel is necessary, but not sufficient, to boot the RPi4 in 64-bit mode; you also need the supporting firmware, configuration files, and userland software.
