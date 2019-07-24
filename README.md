@@ -17,7 +17,7 @@ A new build tarball is automatically created and uploaded as a release asset eac
 
 > The default branch is used, as that is generally given most attention by RPF upstream.
 
-As an (historical) example, on 23 July 2019, the default branch was `rpi-4.19.y` and the latest commit was `a21b98653ecf7b2f71906228d9965d8174a1c275` (the short form of which is `a21b98653ecf`). The created release was [4.19.59.20190723](https://github.com/sakaki-/bcm2711-kernel-bis/releases/tag/4.19.59.20190723), within which the kernel tarball was `bcm2711-kernel-bis-4.19.59.20190723.tar.xz`, and the corresponding kernel release name was `4.19.59-v8-a21b98653ecf-p4-bis+`.
+As an (historical) example, on 24 July 2019, the default branch was `rpi-4.19.y` and the latest commit was `689fc28a5af07cedb88760b2f35b1eb6f6a7e112` (the short form of which is `689fc28a5af0`). The created release was [4.19.59.20190724](https://github.com/sakaki-/bcm2711-kernel-bis/releases/tag/4.19.59.20190724), within which the kernel tarball was `bcm2711-kernel-bis-4.19.59.20190724.tar.xz`, and the corresponding kernel release name was `4.19.59-v8-689fc28a5af0-p4-bis+`.
 
 Each kernel release tarball currently provides the following files:
 * `/boot/kernel8-p4.img` (this is the bootable 64-bit kernel);
