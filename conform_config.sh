@@ -318,7 +318,7 @@ set_kernel_config CONFIG_DVB_SI2168 m
 set_kernel_config CONFIG_DVB_GP8PSK_FE m
 set_kernel_config CONFIG_DVB_USB m
 set_kernel_config CONFIG_DVB_LGDT3306A m
-set_kernel_config CONFIG_FB_SIMPLE y
+#set_kernel_config CONFIG_FB_SIMPLE y
 set_kernel_config CONFIG_SND_BCM2708_SOC_IQAUDIO_CODEC m
 set_kernel_config CONFIG_SND_BCM2708_SOC_I_SABRE_Q2M m
 set_kernel_config CONFIG_SND_AUDIOSENSE_PI m
@@ -332,7 +332,7 @@ set_kernel_config CONFIG_SND_SOC_TLV320AIC32X4 m
 set_kernel_config CONFIG_SND_SOC_TLV320AIC32X4_I2C m
 set_kernel_config CONFIG_SND_SOC_I_SABRE_CODEC m
 set_kernel_config CONFIG_HID_BIGBEN_FF m
-set_kernel_config CONFIG_USB_XHCI_PLATFORM y
+#set_kernel_config CONFIG_USB_XHCI_PLATFORM y
 set_kernel_config CONFIG_USB_TMC m
 set_kernel_config CONFIG_USB_UAS y
 set_kernel_config CONFIG_USBIP_VUDC m
@@ -366,3 +366,6 @@ set_kernel_config CONFIG_BCM2835_POWER y
 set_kernel_config CONFIG_INV_MPU6050_IIO m
 set_kernel_config CONFIG_INV_MPU6050_I2C m
 set_kernel_config CONFIG_SECURITYFS y
+
+# Safer to build this in
+set_kernel_config CONFIG_BINFMT_MISC y
