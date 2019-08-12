@@ -1,8 +1,9 @@
 #!/bin/bash
 #
 # Simple script to tweak an existing baseline kernel .config file.
+# Also allows useful pending PRs to be easily applied to the kernel tree.
 #
-# Copyright (c) 2018 sakaki <sakaki@deciban.com>
+# Copyright (c) 2018-19 sakaki <sakaki@deciban.com>
 # License: GPL v2.0
 # NO WARRANTY
 #
@@ -30,6 +31,26 @@ unset_kernel_config() {
     sed -i "s/^${TGT}=.*/# ${TGT} is not set/" .config
 }
 
+apply_pr() {
+    # pr number as $1, comment as $2
+    echo "Applying PR#${1}: '${2}':"
+    if ! wget -c --quiet \
+      https://patch-diff.githubusercontent.com/raw/raspberrypi/linux/pull/${1}.diff \
+      -O ${1}.patch; then
+        >&2 echo "  Failed to download patchfile for PR#${1}"
+    elif [[ ! -s ${1}.patch ]]; then
+        >&2 echo "  No non-empty patchfile for PR#${1}"
+    elif ! patch -p1 --forward --silent --force --dry-run &>/dev/null \
+           < ${1}.patch; then
+        >&2 echo "  Failed to apply PR#${1} in dry run - already merged?"
+    elif ! patch -p1 --forward --force < ${1}.patch; then
+        >&2 echo "  PR#{1} failed to apply - source tree may be corrupt!"
+    else
+        echo "  PR#${1} applied successfully!"
+    fi
+    echo
+    return 0
+}
 
 # Custom config settings follow
 
@@ -369,3 +390,11 @@ set_kernel_config CONFIG_SECURITYFS y
 
 # Safer to build this in
 set_kernel_config CONFIG_BINFMT_MISC y
+
+# apply PR #3063 (if not done already)
+# credit: phire
+apply_pr 3063 "Enable 3D acceleration with 64-bit kernel on RPi4"
+
+# apply PR #3144 (if not done already)
+# credit: yaroslavros
+apply_pr 3144 "Add arm64 pcie bounce buffers; enables 4GiB on RPi4"
