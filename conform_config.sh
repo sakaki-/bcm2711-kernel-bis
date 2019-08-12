@@ -339,7 +339,7 @@ set_kernel_config CONFIG_DVB_SI2168 m
 set_kernel_config CONFIG_DVB_GP8PSK_FE m
 set_kernel_config CONFIG_DVB_USB m
 set_kernel_config CONFIG_DVB_LGDT3306A m
-#set_kernel_config CONFIG_FB_SIMPLE y
+set_kernel_config CONFIG_FB_SIMPLE y
 set_kernel_config CONFIG_SND_BCM2708_SOC_IQAUDIO_CODEC m
 set_kernel_config CONFIG_SND_BCM2708_SOC_I_SABRE_Q2M m
 set_kernel_config CONFIG_SND_AUDIOSENSE_PI m
@@ -394,6 +394,13 @@ set_kernel_config CONFIG_BINFMT_MISC y
 # apply PR #3063 (if not done already)
 # credit: phire
 apply_pr 3063 "Enable 3D acceleration with 64-bit kernel on RPi4"
+
+# set the appropriate kernel configs unlocked by #3063
+set_kernel_config CONFIG_ARCH_BCM y
+set_kernel_config CONFIG_ARCH_BCM2835 y
+set_kernel_config CONFIG_DRM_V3D m
+set_kernel_config CONFIG_DRM_VC4 m
+set_kernel_config CONFIG_DRM_VC4_HDMI_CEC y
 
 # apply PR #3144 (if not done already)
 # credit: yaroslavros
