@@ -400,7 +400,7 @@ apply_pr 3063 "Enable 3D acceleration with 64-bit kernel on RPi4"
 
 # set the appropriate kernel configs unlocked by #3063
 set_kernel_config CONFIG_ARCH_BCM y
-#set_kernel_config CONFIG_ARCH_BCM2835 y
+set_kernel_config CONFIG_ARCH_BCM2835 y
 set_kernel_config CONFIG_DRM_V3D m
 set_kernel_config CONFIG_DRM_VC4 m
 set_kernel_config CONFIG_DRM_VC4_HDMI_CEC y
