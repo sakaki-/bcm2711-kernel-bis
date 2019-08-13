@@ -391,6 +391,9 @@ set_kernel_config CONFIG_SECURITYFS y
 # Safer to build this in
 set_kernel_config CONFIG_BINFMT_MISC y
 
+# pulseaudio wants a buffer of at least this size
+set_kernel_config CONFIG_SND_HDA_PREALLOC_SIZE 2048
+
 # apply PR #3063 (if not done already)
 # credit: phire
 apply_pr 3063 "Enable 3D acceleration with 64-bit kernel on RPi4"
