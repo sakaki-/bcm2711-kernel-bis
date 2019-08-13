@@ -407,4 +407,7 @@ set_kernel_config CONFIG_DRM_VC4_HDMI_CEC y
 
 # apply PR #3144 (if not done already)
 # credit: yaroslavros
-#apply_pr 3144 "Add arm64 pcie bounce buffers; enables 4GiB on RPi4"
+apply_pr 3144 "Add arm64 pcie bounce buffers; enables 4GiB on RPi4"
+
+# required by #3144; should already be on
+set_kernel_config CONFIG_PCIE_BRCMSTB y
