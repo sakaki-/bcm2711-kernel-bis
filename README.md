@@ -9,9 +9,9 @@ Automated build of a tweaked version of the latest 64-bit `bcm2711_defconfig` Li
 
 This project contains a weekly autobuild of the default branch (currently, `rpi-4.19.y`) of the [official Raspberry Pi Linux source tree](https://github.com/raspberrypi/linux), for the [64-bit Raspberry Pi 4](https://www.raspberrypi.org/products/raspberry-pi-4-model-b/).
 
-As with its sister project [bcm2711-kernel](https://github.com/sakaki-/bcm2711-kernel), the baseline build configuration is the upstream `bcm2711_defconfig`, wherein the first 12 hex digits of the tip commit SHA1 hash plus `-p4` are appended to `CONFIGLOCALVERSION` (with a separating hyphen). However, in *this* project, `-bis` is additionally appended to `CONFIGLOCALVERSION`, and (more importantly) additional tweaks are *also* applied to the kernel configuration before building, by running the [`conform_config.sh`](https://github.com/sakaki-/bcm2711-kernel-bis/blob/master/conform_config.sh) script.
+As with its sister project [bcm2711-kernel](https://github.com/sakaki-/bcm2711-kernel), the baseline build configuration is the upstream `bcm2711_defconfig`, wherein the first 12 hex digits of the tip commit SHA1 hash plus `-p4` are appended to `CONFIGLOCALVERSION` (with a separating hyphen). However, in *this* project, `-bis` is additionally appended to `CONFIGLOCALVERSION`, and (more importantly) additional tweaks are *also* applied to the kernel source and configuration before building, by running the [`patch_kernel.sh`](https://github.com/sakaki-/bcm2711-kernel-bis/blob/master/patch_kernel.sh) and [`conform_config.sh`](https://github.com/sakaki-/bcm2711-kernel-bis/blob/master/conform_config.sh) scripts, respectively.
 
-> If you have changes you'd like to apply to the kernel config used by this project, please submit a PR targeting the [`conform_config.sh`](https://github.com/sakaki-/bcm2711-kernel-bis/blob/master/conform_config.sh) script. Changes should target the *end* of the script. Only edits which use the bundled convenience functions `set_kernel_config` and (rarely) `unset_kernel_config` will be considered for merging. Modularization is prefered wherever possible. Please include a short comment describing the changes, ideally including a link or bug ID.
+> If you have changes you'd like to apply to the kernel config used by this project, please submit a PR targeting the [`patch_kernel.sh`](https://github.com/sakaki-/bcm2711-kernel-bis/blob/master/patch_kernel.sh) or [`conform_config.sh`](https://github.com/sakaki-/bcm2711-kernel-bis/blob/master/conform_config.sh) script, as appropriate. Changes should target the *end* of the script. Only edits which use the bundled convenience functions `apply_pr` (for `patch_kernel.sh`) and `set_kernel_config` and (rarely) `unset_kernel_config` (for `conform_config.sh`) will be considered for merging. Modularization is prefered wherever possible. Please include a short comment describing the changes, ideally including a link or bug ID.
 
 A new build tarball is automatically created and uploaded as a release asset each week (unless the tip of the default branch is unchanged from the prior week, or an error occurs during the build process). The versions of the builds in this project will always mirror those of [bcm2711-kernel](https://github.com/sakaki-/bcm2711-kernel).
 
@@ -25,7 +25,7 @@ Each kernel release tarball currently provides the following files:
 * `/boot/config-p4` (the configuration used to build the kernel);
 * `/boot/System-p4.map` (the kernel's symbol table);
 * `/boot/bcm2711-rpi-4-b.dtb` (the device tree blob; currently only one);
-* `/boot/armstub8-gic.bin` (stubs required for the GIC);
+* `/boot/armstub8-gic.bin` (stubs required - on older boot firmware only - for the GIC);
 * `/boot/overlays/...` (the device tree blob overlays);
 * `/lib/modules/<kernel release name>/...` (the module set for the kernel).
 
@@ -42,6 +42,8 @@ The corresponding kernel configuration (derived via `make bcm2711_defconfig && c
 ## <a name="installation"></a>Installation
 
 You can simply untar a kernel release tarball from this project into an existing (32 or 64-bit) OS image to deploy it.
+
+### <a name="add_to_raspbian"></a>Example 1: Converting a 32-bit Raspbian Image
 
 For example, to allow the current 32-bit userland Raspbian (with desktop) image to be booted under a 64-bit kernel on a Pi4, proceed as follows.
 
@@ -77,15 +79,12 @@ Modify the [pi4] section of this file (it appears near the end of the file), so 
 # Enable DRM VC4 V3D driver on top of the dispmanx display stack
 dtoverlay=vc4-fkms-v3d
 max_framebuffers=2
-# memory must be clamped at 1GiB for current 64-bit Pi4 kernels
-# restriction will hopefully be removed shortly
-total_mem=1024
 arm_64bit=1
-enable_gic=1
-armstub=armstub8-gic.bin
 # differentiate from Pi3 64-bit kernels
 kernel=kernel8-p4.img
 ```
+
+> Note that the previous requirement to set `armstub8-gic.bin` and `enable_gic=1` in the above file, is obviated by the use of the *current* boot firmware (`start4*.elf` and `fixup4*.dat`) on the RPi4. With modern kernels, the `total_mem` clamp can safely be omitted too (as above).
 
 Leave the rest of the file as-is. Save, and exit `nano`. Then unmount the image:
 
@@ -94,7 +93,18 @@ linuxpc ~ # sync
 linuxpc ~ # umount -v /mnt/piroot/{boot,}
 ```
 
-If you now remove the microSD card, insert it into a RPi4, and power on, you should find it starts up under the 64-bit kernel! 
+If you now remove the microSD card, insert it into a RPi4, and power on, you should find it starts up under the 64-bit kernel!
+
+### <a name="update_kernel"></a>Example 2: Updating an Existing, Booted Image
+
+If you would like to update a RPi4 image you are currently *booted* into, you can update to the latest release by issuing:
+
+```console
+pi4 ~ # wget -cO- https://github.com/sakaki-/bcm2711-kernel-bis/releases/download/4.19.65.20190814/bcm2711-kernel-bis-4.19.65.20190814.tar.xz | tar -xJf- -C /
+pi4 ~ # sync
+```
+
+Once this completes, modify `/boot/config.txt` (if you have not already done so) as shown [above](#add_to_raspbian). Then simply reboot, and you should be using your new kernel!
 
 > Users of my [rpi3 overlay](https://github.com/sakaki-/rpi3-overlay) (it is pre-installed on the [gentoo-on-rpi3-64bit](https://github.com/sakaki-/gentoo-on-rpi3-64bit) image, for example), can simply `emerge` the `bcm2711-kernel-bis-bin` package to deploy (a new ebuild is automatically created to mirror each release here).
 
