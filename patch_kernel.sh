@@ -43,7 +43,3 @@ apply_pr() {
 # The apply_pr() function will not apply a patch if it
 # has already been merged, or some part of it will otherwise
 # not apply
-
-# apply PR #3063
-# credit: phire
-apply_pr 3063 "Enable 3D acceleration with 64-bit kernel on RPi4"
