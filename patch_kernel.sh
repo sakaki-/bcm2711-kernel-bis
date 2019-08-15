@@ -47,7 +47,3 @@ apply_pr() {
 # apply PR #3063
 # credit: phire
 apply_pr 3063 "Enable 3D acceleration with 64-bit kernel on RPi4"
-
-# apply PR #3144
-# credit: yaroslavros
-apply_pr 3144 "Add arm64 pcie bounce buffers; enables 4GiB on RPi4"
