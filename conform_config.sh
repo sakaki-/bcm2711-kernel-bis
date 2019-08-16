@@ -384,3 +384,9 @@ set_kernel_config CONFIG_DRM_VC4_HDMI_CEC y
 # required by PR#3144; should already be applied, but just to be safe
 set_kernel_config CONFIG_PCIE_BRCMSTB y
 set_kernel_config CONFIG_BCM2835_MMC y
+
+# Snap needs squashfs. The ubuntu eoan-preinstalled-server image at 
+# http://cdimage.ubuntu.com/ubuntu-server/daily-preinstalled/current/ uses snap
+# during cloud-init setup at first boot. Without this the login accounts are not
+# created and the user can not login.
+set_kernel_config CONFIG_SQUASHFS y
