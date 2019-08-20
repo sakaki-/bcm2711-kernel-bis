@@ -1,8 +1,6 @@
 # bcm2711-kernel-bis
 Automated build of a tweaked version of the latest 64-bit `bcm2711_defconfig` Linux kernel for the RPi4, updated weekly.
 
-**Caution - this repo is work in progress, and not yet ready for production use!**
-
 ## Description
 
 <img src="https://raw.githubusercontent.com/sakaki-/resources/master/raspberrypi/pi4/Raspberry_Pi_4_B.jpg" alt="Raspberry Pi 4 B" width="250px" align="right"/>
