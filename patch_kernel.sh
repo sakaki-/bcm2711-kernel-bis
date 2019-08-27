@@ -43,3 +43,7 @@ apply_pr() {
 # The apply_pr() function will not apply a patch if it
 # has already been merged, or some part of it will otherwise
 # not apply
+
+# Fixes #2
+# Credit: yaroslavros
+apply_pr 3164 "Fix issues with WiFi + bounce buffers"
