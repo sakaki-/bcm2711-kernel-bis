@@ -393,11 +393,11 @@ set_kernel_config CONFIG_SQUASHFS y
 
 # Ceph support for Block Device (RBD) and Filesystem (FS)
 # https://docs.ceph.com/docs/master/
-set_kernel_config CONFIG_CEPH_LIB=m
-set_kernel_config CONFIG_CEPH_LIB_USE_DNS_RESOLVER=y
-set_kernel_config CONFIG_CEPH_FS=m
-set_kernel_config CONFIG_CEPH_FSCACHE=y
-set_kernel_config CONFIG_CEPH_FS_POSIX_ACL=y
-set_kernel_config CONFIG_BLK_DEV_RBD=m
+set_kernel_config CONFIG_CEPH_LIB m
+set_kernel_config CONFIG_CEPH_LIB_USE_DNS_RESOLVER y
+set_kernel_config CONFIG_CEPH_FS m
+set_kernel_config CONFIG_CEPH_FSCACHE y
+set_kernel_config CONFIG_CEPH_FS_POSIX_ACL y
+set_kernel_config CONFIG_BLK_DEV_RBD m
 
 
