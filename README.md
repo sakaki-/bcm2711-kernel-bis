@@ -21,11 +21,14 @@ Each kernel release tarball currently provides the following files:
 * `/boot/kernel8-p4.img` (this is the bootable 64-bit kernel);
 * `/boot/COPYING.linux` (the kernel's license file);
 * `/boot/config-p4` (the configuration used to build the kernel);
-* `/boot/System-p4.map` (the kernel's symbol table);
+* `/boot/Module-p4.symvers.xz` (a table mapping exported symbols to provider, compressed);
+* `/boot/System-p4.map.xz` (the kernel's symbol table, compressed);
 * `/boot/bcm2711-rpi-4-b.dtb` (the device tree blob; currently only one);
 * `/boot/armstub8-gic.bin` (stubs required - on older boot firmware only - for the GIC);
 * `/boot/overlays/...` (the device tree blob overlays);
 * `/lib/modules/<kernel release name>/...` (the module set for the kernel).
+
+> The `/boot/Module-p4.symvers.xz` file is only included in more recent builds. The `/boot/System-p4.map.xz` is supplied in compressed form only in recent builds.
 
 The current kernel tarball may be downloaded from the link below (or via `wget`, or via the corresponding `bcm2711-kernel-bis-bin` ebuild, per the [instructions following](#installation)):
 
