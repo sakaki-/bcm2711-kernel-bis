@@ -400,4 +400,8 @@ set_kernel_config CONFIG_CEPH_FSCACHE y
 set_kernel_config CONFIG_CEPH_FS_POSIX_ACL y
 set_kernel_config CONFIG_BLK_DEV_RBD m
 
+# Diffie-Hellman operations on retained keys
+# (required for >keyutils-1.6)
+set_kernel_config CONFIG_KEY_DH_OPERATIONS y
+
 
