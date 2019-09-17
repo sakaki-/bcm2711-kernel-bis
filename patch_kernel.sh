@@ -44,6 +44,3 @@ apply_pr() {
 # has already been merged, or some part of it will otherwise
 # not apply
 
-# Fixes #2
-# Credit: yaroslavros
-apply_pr 3164 "Fix issues with WiFi + bounce buffers"
