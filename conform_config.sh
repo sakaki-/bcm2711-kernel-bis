@@ -30,6 +30,7 @@ unset_kernel_config() {
     sed -i "s/^${TGT}=.*/# ${TGT} is not set/" .config
 }
 
+
 # Custom config settings follow
 
 # Submit PRs with edits targeting the _bottom_ of this file
@@ -404,4 +405,6 @@ set_kernel_config CONFIG_BLK_DEV_RBD m
 # (required for >keyutils-1.6)
 set_kernel_config CONFIG_KEY_DH_OPERATIONS y
 
-
+# allow raw memory access for root
+unset_kernel_config CONFIG_STRICT_DEVMEM
+unset_kernel_config CONFIG_IO_STRICT_DEVMEM
