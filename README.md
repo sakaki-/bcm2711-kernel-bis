@@ -34,7 +34,7 @@ The current kernel tarball may be downloaded from the link below (or via `wget`,
 
 Variant | Version | Most Recent Image
 :--- | ---: | ---:
-Kernel, dtbs, modules and GIC stub | 4.19.106.20200225 | [bcm2711-kernel-bis-4.19.106.20200225.tar.xz](https://github.com/sakaki-/bcm2711-kernel-bis/releases/download/4.19.106.20200225/bcm2711-kernel-bis-4.19.106.20200225.tar.xz)
+Kernel, dtbs, modules and GIC stub | 4.19.106.20200304 | [bcm2711-kernel-bis-4.19.106.20200304.tar.xz](https://github.com/sakaki-/bcm2711-kernel-bis/releases/download/4.19.106.20200304/bcm2711-kernel-bis-4.19.106.20200304.tar.xz)
 
 The corresponding kernel configuration (derived via `make bcm2711_defconfig && conform_config.sh && make olddefconfig`) may be viewed [here](https://github.com/sakaki-/bcm2711-kernel-bis/blob/master/config). The 'baseline' `bcm2711_defconfig` may be viewed [here](https://github.com/sakaki-/bcm2711-kernel-bis/blob/master/bcm2711_config), the `patch_kernel.sh` script may be viewed [here](https://github.com/sakaki-/bcm2711-kernel-bis/blob/master/patch_kernel.sh), the `conform_config.sh` script may be viewed [here](https://github.com/sakaki-/bcm2711-kernel-bis/blob/master/conform_config.sh), and a diff between the 'tweaked' and 'baseline' configurations may be viewed [here](https://github.com/sakaki-/bcm2711-kernel-bis/blob/master/vs_bcm2711_config.diff).
 
@@ -65,7 +65,7 @@ linuxpc ~ # mount -v /dev/mmcblk0p1 /mnt/piroot/boot
 Next, fetch the the current kernel tarball, and untar it into the mounted image. Issue:
 
 ```console
-linuxpc ~ # wget -cO- https://github.com/sakaki-/bcm2711-kernel-bis/releases/download/4.19.106.20200225/bcm2711-kernel-bis-4.19.106.20200225.tar.xz | tar -xJf- -C /mnt/piroot/
+linuxpc ~ # wget -cO- https://github.com/sakaki-/bcm2711-kernel-bis/releases/download/4.19.106.20200304/bcm2711-kernel-bis-4.19.106.20200304.tar.xz | tar -xJf- -C /mnt/piroot/
 ```
 
 Then, edit the image's `/boot/config.txt`:
@@ -101,7 +101,7 @@ If you now remove the microSD card, insert it into a RPi4, and power on, you sho
 If you would like to update a RPi4 image you are currently *booted* into, you can update to the latest release by issuing:
 
 ```console
-pi4 ~ # wget -cO- https://github.com/sakaki-/bcm2711-kernel-bis/releases/download/4.19.106.20200225/bcm2711-kernel-bis-4.19.106.20200225.tar.xz | tar -xJf- -C /
+pi4 ~ # wget -cO- https://github.com/sakaki-/bcm2711-kernel-bis/releases/download/4.19.106.20200304/bcm2711-kernel-bis-4.19.106.20200304.tar.xz | tar -xJf- -C /
 pi4 ~ # sync
 ```
 
