@@ -408,3 +408,9 @@ set_kernel_config CONFIG_KEY_DH_OPERATIONS y
 # allow raw memory access for root
 unset_kernel_config CONFIG_STRICT_DEVMEM
 unset_kernel_config CONFIG_IO_STRICT_DEVMEM
+
+# H265 h/w decoder access
+set_kernel_config CONFIG_MFD_SYSCON y
+set_kernel_config CONFIG_MEDIA_CONTROLLER_REQUEST_API y
+set_kernel_config CONFIG_VIDEO_RPIVID m
+
