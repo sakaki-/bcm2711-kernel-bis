@@ -414,3 +414,7 @@ set_kernel_config CONFIG_MFD_SYSCON y
 set_kernel_config CONFIG_MEDIA_CONTROLLER_REQUEST_API y
 set_kernel_config CONFIG_VIDEO_RPIVID m
 
+# allow process events to be passed to userspace
+set_kernel_config CONFIG_CONNECTOR y
+set_kernel_config CONFIG_PROC_EVENTS y
+
